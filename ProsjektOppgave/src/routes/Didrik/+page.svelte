@@ -1,12 +1,10 @@
 <script>
-    // Replace 'YOUR_API_KEY' with your actual OMDb API key
     const apiKey = '6dab94de';
     const baseUrl = 'http://www.omdbapi.com/';
-
+    let img_url = ""
     function getMovieInfo(title) {
         const apiUrl = `${baseUrl}?apikey=${apiKey}&t=${encodeURIComponent(title)}`;
 
-        // Make a GET request to the OMDb API
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
@@ -15,7 +13,8 @@
                     console.log(`Year: ${data.Year}`);
                     console.log(`Genre: ${data.Genre}`);
                     console.log(`Director: ${data.Director}`);
-                    // Add more fields as needed
+                    console.log(`Handling: ${data.Plot}`);
+                    img_url = data.Poster;
                 } else {
                     console.error(`Error: ${data.Error}`);
                 }
@@ -26,5 +25,6 @@
     }
 
     // Example usage
-    getMovieInfo('Inception');
+    getMovieInfo('Matrix');
 </script>
+<img src="{img_url}" alt="Movie poster">
