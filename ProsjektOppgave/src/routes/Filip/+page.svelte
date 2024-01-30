@@ -61,7 +61,7 @@
         <p>Year: {movieInfo.year}</p>
         <p>Genre: {movieInfo.genre}</p>
         <p>Runtime: {movieInfo.runtime}</p>
-        <p>Poster: <img src="movieInfo.poster" alt=""> </p>
+        <p>Poster: <img src={movieInfo.poster} alt=""> </p>
         <!-- Add more fields as needed -->
       </div>
     {:else if error}
