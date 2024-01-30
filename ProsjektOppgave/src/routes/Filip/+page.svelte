@@ -8,7 +8,7 @@
     let movieInfo = null;
     let error = null;
   
-    const apiKey = 'Y6dab94de'; // Replace with your actual OMDb API key
+    const apiKey = '6dab94de'; // Replace with your actual OMDb API key
     const baseUrl = 'http://www.omdbapi.com/';
   
     function getMovieInfo() {
@@ -22,6 +22,8 @@
               title: data.Title,
               year: data.Year,
               genre: data.Genre,
+              runtime: data.Runtime,
+              poster: data.poster,
               // Add more fields as needed
             };
             error = null;
@@ -58,6 +60,8 @@
         <h2>{movieInfo.title}</h2>
         <p>Year: {movieInfo.year}</p>
         <p>Genre: {movieInfo.genre}</p>
+        <p>Runtime: {movieInfo.runtime}</p>
+        <p>Poster: <img src="movieInfo.poster" alt=""> </p>
         <!-- Add more fields as needed -->
       </div>
     {:else if error}
