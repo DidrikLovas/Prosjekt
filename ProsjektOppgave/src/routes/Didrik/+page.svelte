@@ -25,6 +25,6 @@
     }
 
     // Example usage
-    getMovieInfo('Matrix');
+    getMovieInfo('Cars');
 </script>
 <img src="{img_url}" alt="Movie poster">
