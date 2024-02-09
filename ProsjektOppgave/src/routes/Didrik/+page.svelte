@@ -12,7 +12,7 @@
   
     function getMovieInfo() {
       const apiUrl = `${baseUrl}?apikey=${apiKey}&t=${encodeURIComponent(title)}`;
-  
+
       fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
@@ -25,7 +25,6 @@
               poster: data.Poster,
               type: data.Type,
               plot: data.Plot,
-              resp: data.response
               // Add more fields as needed
             };
             error = null;
@@ -46,7 +45,8 @@
     });
   </script>
   
-  <style>
+  <!-- App.svelte -->
+<style>
     main {
       display: flex;
       flex-direction: column;
@@ -55,23 +55,29 @@
     }
   
     h1 {
-      text-align: center;
+      font-size: 24px;
       color: #333;
+      margin-bottom: 20px;
     }
   
     input {
       padding: 10px;
       margin: 10px 0;
       font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 300px;
+      box-sizing: border-box;
     }
   
     button {
-      padding: 10px;
+      padding: 10px 20px;
       background-color: #007bff;
       color: #fff;
       font-size: 16px;
       cursor: pointer;
       border: none;
+      border-radius: 4px;
     }
   
     button:hover {
@@ -81,10 +87,18 @@
     div {
       margin-top: 20px;
       text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 4px;
+      background-color: #fff;
+      width: 300px;
+      box-sizing: border-box;
     }
   
     h2 {
       color: #333;
+      font-size: 20px;
+      margin-bottom: 10px;
     }
   
     p {
@@ -97,10 +111,15 @@
       height: auto;
       margin-top: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
     }
   
-    /* Add more styles as needed */
+    p.error {
+      color: #ff4d4f;
+      margin-top: 10px;
+    }
   </style>
+  
   
   <main>
     <h1>Movie/Series Search</h1>
@@ -115,12 +134,17 @@
         <p>Year: {movieInfo.year}</p>
         <p>Type: {movieInfo.type}</p>
         <p>Genre: {movieInfo.genre}</p>
+        {#if !(movieInfo.plot == "N/A")}
         <p>Plot: {movieInfo.plot}</p>
+        {/if}
+        {#if !(movieInfo.runtime == "N/A")}
         <p>Runtime: {movieInfo.runtime}</p>
-        <img src={movieInfo.poster} alt="Filmplakat">
+        {/if}
+        {#if !(movieInfo.poster == "N/A")}
+        <img src={movieInfo.poster} alt="Movie poster">
+        {/if}
       </div>
       {:else if buttonClicked && error}
-      <p>{error}</p>
+      <p class="error">{error}</p>
     {/if}
   </main>
-  
