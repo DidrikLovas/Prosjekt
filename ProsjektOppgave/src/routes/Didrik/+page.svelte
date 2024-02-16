@@ -1,7 +1,5 @@
 <!-- App.svelte -->
 <script>
-    import { onMount } from 'svelte';
-  
     let title = '';
     let movieInfo = null;
     let error = null;
@@ -38,11 +36,6 @@
           error = `Error fetching data: ${error}`;
         });
     }
-  
-    onMount(() => {
-      // Example usage
-      getMovieInfo('Inception');
-    });
   </script>
   
   <!-- App.svelte -->
@@ -85,30 +78,34 @@
     color: #007bff;
   }
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
 
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #333;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-  }
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
 
-  .dropdown-content a {
-    color: #fff;
-    padding: 12px 16px;
-    display: block;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  margin: 0;
+}
 
-  .dropdown-content a:hover {
-    background-color: #007bff;
-  }
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
     main {
       display: flex;
       flex-direction: column;
@@ -144,6 +141,7 @@
   
     button:hover {
       background-color: #0056b3;
+
     }
   
     div {
@@ -188,13 +186,12 @@
       <li><a href="#">Home</a></li>
       <li><a href="#">About</a></li>
       <li class="dropdown">
-        <a href="#">More</a>
-        <div class="dropdown-content">
-          <a href="#">Services</a>
-          <a href="#">Portfolio</a>
-          <a href="#">Contact</a>
-        </div>
-      </li>
+          <a class="dropbtn">More</a>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
     </ul>
   </nav>
   <main>
@@ -224,8 +221,3 @@
       <p class="error">{error}</p>
     {/if}
   </main>
-<<<<<<< HEAD
-  
-  
-=======
->>>>>>> e82f5fd20fd346e3079b101afe0c01bfd56afe8d
