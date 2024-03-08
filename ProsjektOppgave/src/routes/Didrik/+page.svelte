@@ -36,8 +36,26 @@
           error = `Error fetching data: ${error}`;
         });
     }
+    function handleRating(stars) {
+    rating = stars;
+  }
+
+  const alternativer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].reverse();
+    
+    let midlertidigVurdering = 5;
+    //Math.round(gjennomsnitt)
+
   </script>
-  
+  <head>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.missing_component.css"
+    rel="stylesheet"
+  />
+  </head>
   <!-- App.svelte -->
 <style>
     nav {
@@ -108,7 +126,48 @@
 .dropdown:hover .dropdown-content {display: flex;
   flex-direction: column;
 }
-
+.stjerneVurderingContainer {
+        display: flex;
+        position: relative;
+        flex-direction: row-reverse; /* Change from 'row' to 'row-reverse' */
+        justify-content: center;
+        width: 60%;
+        top: -3%;
+        margin-left: 40px;
+        padding: 0;
+    }
+    .stjerneVurderingContainer input {
+        display: none;
+    }
+    .stjerneVurderingContainer label {
+        display: block;
+        cursor: pointer;
+        width: 2vh;
+    }
+    .stjerneVurderingContainer label:before {
+        content: "\f005";
+        font-family: fontAwesome;
+        position: relative;
+        display: block;
+        font-size: 2vh;
+    }
+    .stjerneVurderingContainer label:after {
+        content: "\f005";
+        font-family: fontAwesome;
+        position: absolute;
+        display: block;
+        font-size: 2vh;
+        color: orange;
+        top: 0;
+        opacity: 0;
+        transition: 0.5s;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    .stjerneVurderingContainer label:hover:after,
+    .stjerneVurderingContainer input:hover ~ label:after,
+    .stjerneVurderingContainer input:checked ~ label:after {
+        opacity: 1;
+    }
     main {
       display: flex;
       flex-direction: column;
@@ -219,8 +278,20 @@
         {#if !(movieInfo.poster == "N/A")}
         <img src={movieInfo.poster} alt="Movie poster">
         {/if}
-      </div>
-      {:else if buttonClicked && error}
-      <p class="error">{error}</p>
-    {/if}
+
+      <span class="stjerneVurderingContainer">
+        {#each alternativer as alternativ}
+         <input
+            value={alternativ}
+            bind:group={midlertidigVurdering}
+            type="radio"
+            name="star"
+            id={alternativ.toString()}
+          /><label for={alternativ.toString()} />
+        {/each}
+      </span>
+    </div>
+    {:else if buttonClicked && error}
+        <p class="error">{error}</p>
+      {/if}
   </main>
