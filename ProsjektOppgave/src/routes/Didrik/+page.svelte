@@ -88,11 +88,12 @@
 .dropdown-content {
   display: none;
   position: absolute;
+  left: -10px;
   background-color: #f1f1f1;
-  min-width: 160px;
+  width:100px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
-  margin: 0;
+  margin: 0px;
 }
 
 .dropdown-content a {
@@ -104,7 +105,9 @@
 
 .dropdown-content a:hover {background-color: #ddd;}
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {display: flex;
+  flex-direction: column;
+}
 
     main {
       display: flex;
@@ -186,7 +189,7 @@
       <li><a href="#">Home</a></li>
       <li><a href="#">About</a></li>
       <li class="dropdown">
-          <a class="dropbtn">More</a>
+          <a>More</a>
           <div class="dropdown-content">
             <a href="#">Link 1</a>
             <a href="#">Link 2</a>
