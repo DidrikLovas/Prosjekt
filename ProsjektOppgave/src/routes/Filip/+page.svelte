@@ -147,17 +147,8 @@
     grid-column: span 2;
   }
 
-  .rating {
-    grid-column: span 2;
-    display: flex;
-    align-items: center;
-  }
 
-  .star {
-    margin-right: 5px;
-    font-size: 20px;
-    cursor: pointer;
-  }
+  
 
   .error-message {
     grid-column: span 2;
@@ -185,10 +176,15 @@
       <p>Runtime: {movieInfo.runtime}</p>
       <p>Poster: <img src={movieInfo.poster} alt="" /> </p>
       
-      <div class="rating">
-        <p>Rating:</p>
-        {#each Array.from({ length: 5 }, (_, i) => i + 1) as star}
-          <span class="star" on:click={() => handleRating(star)} aria-hidden={star > rating}>{star <= rating ? '★' : '☆'}</span>
+      <div class="stjerneVurderingContainer">
+        {#each alternativer as alternativ}
+          <input
+            value={alternativ}
+            bind:group={midlertidigVurdering}
+            type="radio"
+            name="star"
+            id={alternativ.toString()}
+          /><label for={alternativ.toString()} />
         {/each}
       </div>
 
