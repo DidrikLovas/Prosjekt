@@ -1,41 +1,59 @@
-<!-- App.svelte -->
 <script>
-    let title = '';
-    let movieInfo = null;
-    let error = null;
-    let buttonClicked = false
+    import { onMount } from 'svelte';
   
-    const apiKey = '6dab94de'; // Replace with your actual OMDb API key
-    const baseUrl = 'http://www.omdbapi.com/';
+    let api_key = '6dab94de';
+    let search_query = '';
+    let movies = [];
   
-    function getMovieInfo() {
-      const apiUrl = `${baseUrl}?apikey=${apiKey}&t=${encodeURIComponent(title)}`;
-
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          if (data.Response === 'True') {
-            movieInfo = {
-              title: data.Title,
-              year: data.Year,
-              genre: data.Genre,
-              runtime: data.Runtime,
-              poster: data.Poster,
-              type: data.Type,
-              plot: data.Plot,
-              // Add more fields as needed
-            };
-            error = null;
-          } else {
-            movieInfo = null;
-            error = `Error: ${data.Error}`;
-          }
-        })
-        .catch(error => {
-          movieInfo = null;
-          error = `Error fetching data: ${error}`;
-        });
-    }
+    const searchMovies = async () => {
+      const url = `http://www.omdbapi.com/?apikey=${api_key}&s=${search_query}`;
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          const data = await response.json();
+          movies = data.Search || [];
+        } else {
+          console.error(`Feil ved henting av data. Statuskode: ${response.status}`);
+        }
+      } catch (error) {
+        console.error('Noe gikk galt under forespørselen:', error);
+      }
+    };
+  
+    onMount(() => {
+      // Initier søk når komponenten blir montert for første gang
+      searchMovies();
+    });
   </script>
-
+  
+  <main>
+    <h1>Søk etter filmer</h1>
+  
+    <input bind:value={search_query} placeholder="Skriv inn søkeord" />
+  
+    <button on:click={searchMovies}>Søk</button>
+  
+    {#if movies.length > 0}
+      <ul>
+        {#each movies as movie}
+          <li>
+            <p>Tittel: {movie.Title}, År: {movie.Year}, IMDb-ID: {movie.imdbID}</p>
+          </li>
+        {/each}
+      </ul>
+    {:else}
+      <p>Ingen resultater funnet.</p>
+    {/if}
+  </main>
+  
+  <style>
+    main {
+      text-align: center;
+      margin: 2rem;
+    }
+  
+    input, button {
+      margin-bottom: 1rem;
+    }
+  </style>
   
