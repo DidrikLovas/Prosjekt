@@ -1,3 +1,4 @@
+<!--Lag en "Mente du" seksjon som noen andre filmer som har tilnærmet lik samme navn-->
 <!-- App.svelte -->
 <script>
     let title = '';
