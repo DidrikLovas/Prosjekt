@@ -5,17 +5,18 @@
   let movieInfo = null;
   let error = null;
   let buttonClicked = false;
+  let moviesTitles = [];
 
   const apiKey = "6dab94de"; // Replace with your actual OMDb API key
   const baseUrl = "http://www.omdbapi.com/";
 
   const searchMovies = async () => {
-      const url = `http://www.omdbapi.com/?apikey=${api_key}&s=${search_query}`;
+      const url = `http://www.omdbapi.com/?apikey=${api_key}&s=${encodeURIComponent(title)}`;
       try {
         const response = await fetch(url);
         if (response.ok) {
-          const data = await response.json();
-          movies = data.Search || [];
+            const data = await response.json();
+            moviesTitles = data.Search.map(movie => ({ title: movie.Title }));
         } else {
           console.error(`Feil ved henting av data. Statuskode: ${response.status}`);
         }
@@ -26,6 +27,7 @@
 
 
   function getMovieInfo() {
+    buttonClicked = true;
     const apiUrl = `${baseUrl}?apikey=${apiKey}&t=${encodeURIComponent(title)}`;
 
     fetch(apiUrl)
@@ -51,7 +53,8 @@
       .catch((error) => {
         movieInfo = null;
         error = `Error fetching data: ${error}`;
-      });
+      })
+      searchMovies();
   }
   function handleRating(stars) {
     rating = stars;
@@ -59,7 +62,7 @@
 
   const alternativer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].reverse();
 
-  let midlertidigVurdering = 5;
+  let midlertidigVurdering = 0;
   //Math.round(gjennomsnitt)
 
   
@@ -75,15 +78,17 @@
     rel="stylesheet"
   />
 </head>
+{#if buttonClicked === true}
 <div class="sidebar">
   <h3>Mente du?</h3>
   <ul>
-    <li><a href="#">Movie A</a></li>
-    <li><a href="#">Movie B</a></li>
-    <li><a href="#">Movie C</a></li>
-    <!-- Legg til flere relaterte filmer her -->
+    {#each moviesTitles as movieTitle}
+      <li><a href="#1">{movieTitle}</a></li>
+    {/each}
   </ul>
 </div>
+{/if}
+
 <nav>
   <a class="logo" href="#">Your Logo</a>
   <ul class="nav-links">
@@ -104,7 +109,7 @@
 
   <input bind:value={title} placeholder="Enter title" />
 
-  <button on:click={getMovieInfo} on:click={(buttonClicked = true)}
+  <button on:click={getMovieInfo}
     >Search</button
   >
 
